@@ -1,0 +1,64 @@
+.modal-for-user {
+  .img-preview {
+    display        : flex;
+    justify-content: center;
+    align-items    : center;
+    height         : 150px;
+    border         : 1px dashed #ccc;
+    color          : #ccc;
+
+    img {
+      max-width : 100%;
+      max-height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .form-label {
+    font-weight: 650;
+  }
+
+  .label-upload {
+    display         : flex;
+    align-items     : center;
+    font-size       : 1.1rem;
+    width           : fit-content;
+    background-color: #eeeeee;
+    padding         : 5px 10px;
+    border-radius   : 5px;
+
+    &:hover {
+      cursor          : pointer;
+      background-color: #dcdcdc;
+    }
+  }
+
+  button {
+    &.btn-close {
+      &:hover {
+        background-color: #f1283c;
+        color           : #fff;
+      }
+    }
+  }
+}
+
+.manage-user-container {
+  padding: 10px;
+
+  .users-content {
+    .btn-add-new {
+      margin: 15px 0;
+
+      button {
+        display    : flex;
+        align-items: center;
+      }
+    }
+  }
+
+  .title {
+    font-size  : 1.5rem;
+    font-weight: 650;
+  }
+}
