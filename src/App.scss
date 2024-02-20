@@ -20,13 +20,13 @@ body {
     }
 
     .btn-sign-up {
-      border       : 1px solid #fff;
       margin-right : 15px;
       border-radius: 5px;
       padding      : 0 15px;
       background-color: #303030;
       color: #fff;
       height: 40px;
+      border: none;
 
       &:hover {
         background-color: black;

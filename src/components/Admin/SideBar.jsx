@@ -14,6 +14,10 @@ import {
   FaGithub,
   FaRegLaughWink
 } from 'react-icons/fa'
+import { DiReact } from 'react-icons/di'
+import { MdDashboard } from 'react-icons/md'
+import { Link } from 'react-router-dom'
+
 import sidebarBg from '../../assets/bg2.jpg'
 
 const SideBar = props => {
@@ -27,7 +31,7 @@ const SideBar = props => {
         toggled={toggled}
         breakPoint='md'
         onToggle={handleToggleSidebar}
-        timeDuration = {2000}
+        timeDuration={2000}
       >
         <SidebarHeader>
           <div
@@ -35,35 +39,38 @@ const SideBar = props => {
               padding: '24px',
               textTransform: 'uppercase',
               fontWeight: 'bold',
-              fontSize: 14,
+              fontSize: '1.1rem',
               letterSpacing: '1px',
               overflow: 'hidden',
               textOverflow: 'ellipsis',
-              whiteSpace: 'nowrap'
+              whiteSpace: 'nowrap',
+              textAlign: 'center'
             }}
           >
+            <DiReact
+              size={'3em'}
+              color={'00bfff'}
+              style={{ marginRight: '10px' }}
+            />
             Huy Kirito
           </div>
         </SidebarHeader>
 
         <SidebarContent>
           <Menu iconShape='circle'>
-            <MenuItem
-              icon={<FaTachometerAlt />}
-              suffix={<span className='badge red'>New</span>}
-            >
-              dashboard
+            <MenuItem icon={<MdDashboard />}>
+              Dashboard
+              <Link to='/admin' />
             </MenuItem>
-            <MenuItem icon={<FaGem />}> components </MenuItem>
           </Menu>
           <Menu iconShape='circle'>
-            <SubMenu
-              suffix={<span className='badge yellow'>3</span>}
-              icon={<FaRegLaughWink />}
-            >
-              <MenuItem> 1</MenuItem>
-              <MenuItem> 2</MenuItem>
-              <MenuItem> 3</MenuItem>
+            <SubMenu icon={<FaGem />} title='Fetures'>
+              <MenuItem>
+                Users Managements
+                <Link to='/admin/manage-users' />{' '}
+              </MenuItem>
+              <MenuItem> Quiz Managements </MenuItem>
+              <MenuItem> Questions Managements </MenuItem>
             </SubMenu>
           </Menu>
         </SidebarContent>
@@ -89,7 +96,11 @@ const SideBar = props => {
                   overflow: 'hidden'
                 }}
               >
-                viewSource
+                <span
+                  style={{ whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}
+                >
+                  Github Profile
+                </span>
               </span>
             </a>
           </div>
