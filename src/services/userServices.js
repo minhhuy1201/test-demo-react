@@ -21,6 +21,10 @@ const getAllUser = () => {
   return axios.get('api/v1/participant/all')
 }
 
+const getUserWithPaginate = (page, limit) => {
+  return axios.get(`api/v1/participant?page=${page}&limit=${limit}`)
+}
+
 // UPDATE A USER
 const putUpdateUser = (id, userName, role, userImg) => {
   const data = new FormData()
@@ -41,4 +45,10 @@ const deleteUser = userId => {
   return axios.delete('api/v1/participant', { data: { id: userId } })
 }
 
-export { postCreateNewUser, getAllUser, putUpdateUser, deleteUser }
+export {
+  postCreateNewUser,
+  getAllUser,
+  getUserWithPaginate,
+  putUpdateUser,
+  deleteUser
+}

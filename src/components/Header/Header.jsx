@@ -28,7 +28,7 @@ const Header = () => {
           </Nav>
 
           <Nav>
-            <button className='btn-sign-in'>Sign in</button>
+            <button className='btn-sign-in'>Log in</button>
             <button className='btn-sign-up'>Sign up</button>
             {/* <NavDropdown title='Setting' id='basic-nav-dropdown'>
               <NavDropdown.Item>Log in</NavDropdown.Item>
