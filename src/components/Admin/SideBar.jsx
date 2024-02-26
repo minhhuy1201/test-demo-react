@@ -17,11 +17,13 @@ import {
 import { DiReact } from 'react-icons/di'
 import { MdDashboard } from 'react-icons/md'
 import { Link } from 'react-router-dom'
+import {useNavigate} from 'react-router-dom'
 
 import sidebarBg from '../../assets/bg2.jpg'
 
 const SideBar = props => {
-  const { image, collapsed, toggled, handleToggleSidebar } = props
+  const { collapsed, toggled, handleToggleSidebar } = props
+  const navigate = useNavigate()
 
   return (
     <>
@@ -44,8 +46,10 @@ const SideBar = props => {
               overflow: 'hidden',
               textOverflow: 'ellipsis',
               whiteSpace: 'nowrap',
-              textAlign: 'center'
+              textAlign: 'center',
+              cursor: 'pointer'
             }}
+            onClick={() => navigate('/')}
           >
             <DiReact
               size={'3em'}

@@ -3,6 +3,9 @@ import { lazy, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { postLogin } from '../../services/auth'
 import { toast } from 'react-toastify'
+import { useDispatch } from 'react-redux'
+import { doLogin } from '../../redux/action/userAction'
+import { ImSpinner2 } from 'react-icons/im'
 
 const Login = props => {
   const [formInput, setFormInput] = useState({
@@ -15,7 +18,10 @@ const Login = props => {
     password: ''
   })
 
+  const [isLoading, setIsLoading] = useState(false)
+
   const navigate = useNavigate()
+  const dispatch = useDispatch()
 
   const handleUserInput = (name, value) => {
     setFormInput({
@@ -61,14 +67,19 @@ const Login = props => {
     event.preventDefault()
     // VALIDATE
     validateForm()
+    setIsLoading(true)
 
     // CALL API
     let data = await postLogin(formInput.email, formInput.password)
-
     if (data && data.EC === 0) {
+      dispatch(doLogin(data))
       toast.success(data.EM)
+      setIsLoading(false)
       navigate('/')
-    } else toast.error(data.EM)
+    } else {
+      toast.error(data.EM)
+      setIsLoading(false)
+    }
   }
 
   return (
@@ -114,8 +125,9 @@ const Login = props => {
         </div>
         <span>Forgot password?</span>
         <div>
-          <button type='submit' className='login-submit'>
-            Log in to Huy Kirito
+          <button type='submit' className='login-submit' disabled={isLoading}>
+            {isLoading === true && <ImSpinner2 className='spinner' />}
+            <span>Log in to Huy Kirito</span>
           </button>
         </div>
         <div className='text-center back-homepage'>

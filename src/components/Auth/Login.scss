@@ -70,6 +70,31 @@
       &:hover {
         background-color: #0087d0;
       }
+
+      span {
+        margin-left: 5px;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      .spinner {
+        animation: spin 2s linear infinite;
+        color    : #00d4ff;
+      }
+
+      &:disabled {
+        background-color: #dddddd;
+        color           : #afafaf;
+        cursor          : no-drop;
+      }
     }
 
     .back-homepage button {
