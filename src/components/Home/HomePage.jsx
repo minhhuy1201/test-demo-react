@@ -1,10 +1,11 @@
 import './HomePage.scss'
 import videoHomePage from '../../assets/video-homepage.mp4'
 import { useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 
 const HomePage = props => {
   const isAuthenticated = useSelector(state => state.user.isAuthenticated)
-  const account = useSelector(state => state.user.account)
+  const navigate = useNavigate()
 
   return (
     <div className='homepage-container'>
@@ -20,7 +21,16 @@ const HomePage = props => {
           molestias quibusdam laborum!
         </div>
         <div>
-          <button className='title-3'>Get start. It's free</button>
+          {/* When user not login -> navigate to login */}
+          {isAuthenticated === false ? (
+            <button onClick={() => navigate('/login')} className='title-3'>
+              Get start. It's free
+            </button>
+          ) : (
+            <button onClick={() => navigate('/user')} className='title-3'>
+              Do quiz now
+            </button>
+          )}
         </div>
       </div>
     </div>

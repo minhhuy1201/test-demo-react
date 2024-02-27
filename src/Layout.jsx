@@ -9,7 +9,24 @@ import ManageUsers from './components/Admin/Content/ManageUsers/ManageUsers'
 import Dashboard from './components/Admin/Content/Dashboard'
 import Login from './components/Auth/Login'
 import { ToastContainer, toast } from 'react-toastify'
-import Signup from './components/Auth/Signup';
+import Signup from './components/Auth/Signup'
+import ListQuiz from './components/User/ListQuiz/ListQuiz'
+import DetailQuiz from './components/User/DetailQuiz/DetailQuiz'
+import notFoundImg from '../src/assets/not_found.png'
+
+const NotFound = () => {
+  return (
+    <div className=' container text-center fs-2 fw-bold'>
+      <img
+        className='img-fluid rounded'
+        style={{ backgroundColor: 'transparent' }}
+        src={notFoundImg}
+        alt='not-found'
+      />
+      <p className='alert alert-danger'>PAGE NOT FOUND</p>
+    </div>
+  )
+}
 
 const Layout = props => {
   return (
@@ -17,8 +34,10 @@ const Layout = props => {
       <Routes>
         <Route path='/' element={<App />}>
           <Route index element={<HomePage />} />
-          <Route path='user' element={<User />} />
+          {/* List all quiz for THAT user */}
+          <Route path='user' element={<ListQuiz />} />
         </Route>
+        <Route path='/quiz/:id' element={<DetailQuiz />} />
 
         <Route path='/admin' element={<Admin />}>
           <Route index element={<Dashboard />} />
@@ -27,20 +46,22 @@ const Layout = props => {
 
         <Route path='/login' element={<Login />} />
         <Route path='/signup' element={<Signup />} />
+        {/* Not found URL */}
+        <Route path='*' element={<NotFound />} />
       </Routes>
 
       <ToastContainer
-          position='top-right'
-          autoClose={3000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          draggable
-          pauseOnHover
-          theme='light'
-        />
-        <ToastContainer />
+        position='top-right'
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        draggable
+        pauseOnHover
+        theme='light'
+      />
+      <ToastContainer />
     </>
   )
 }
