@@ -3,15 +3,10 @@ import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
 import { FcPlus } from 'react-icons/fc'
 import { toast } from 'react-toastify'
-import { postCreateNewUser } from '../../../services/userServices'
+import { postCreateNewUser } from '../../../../services/userServices'
 
 const ModalCreateUser = props => {
-  const {
-    show,
-    setShow,
-    fetchListUsersWithPaginate,
-    setCurrentPage
-  } = props
+  const { show, setShow, fetchListUsersWithPaginate, setCurrentPage } = props
 
   const handleClose = () => {
     setShow(false)

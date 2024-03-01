@@ -13,6 +13,8 @@ import Signup from './components/Auth/Signup'
 import ListQuiz from './components/User/ListQuiz/ListQuiz'
 import DetailQuiz from './components/User/DetailQuiz/DetailQuiz'
 import notFoundImg from '../src/assets/not_found.png'
+import ManageQuizzes from './components/Admin/Content/ManageQuizzes/ManageQuizzes'
+import ManageQuestions from './components/Admin/Content/ManageQuestions/ManageQuestions'
 
 const NotFound = () => {
   return (
@@ -42,6 +44,8 @@ const Layout = props => {
         <Route path='/admin' element={<Admin />}>
           <Route index element={<Dashboard />} />
           <Route path='manage-users' element={<ManageUsers />} />
+          <Route path='manage-quizzes' element={<ManageQuizzes />} />
+          <Route path='manage-questions' element={<ManageQuestions />} />
         </Route>
 
         <Route path='/login' element={<Login />} />

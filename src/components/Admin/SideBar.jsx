@@ -8,16 +8,11 @@ import {
   SidebarContent
 } from 'react-pro-sidebar'
 import 'react-pro-sidebar/dist/css/styles.css'
-import {
-  FaTachometerAlt,
-  FaGem,
-  FaGithub,
-  FaRegLaughWink
-} from 'react-icons/fa'
+import { FaGem, FaGithub } from 'react-icons/fa'
 import { DiReact } from 'react-icons/di'
 import { MdDashboard } from 'react-icons/md'
 import { Link } from 'react-router-dom'
-import {useNavigate} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import sidebarBg from '../../assets/bg2.jpg'
 
@@ -71,10 +66,16 @@ const SideBar = props => {
             <SubMenu icon={<FaGem />} title='Fetures'>
               <MenuItem>
                 Users Managements
-                <Link to='/admin/manage-users' />{' '}
+                <Link to='/admin/manage-users' />
               </MenuItem>
-              <MenuItem> Quiz Managements </MenuItem>
-              <MenuItem> Questions Managements </MenuItem>
+              <MenuItem>
+                Quizzes Managements
+                <Link to='/admin/manage-quizzes' />
+              </MenuItem>
+              <MenuItem>
+                Questions Managements
+                <Link to='/admin/manage-questions' />
+              </MenuItem>
             </SubMenu>
           </Menu>
         </SidebarContent>

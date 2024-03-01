@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
-import { deleteUser } from '../../../services/userServices'
+import { deleteUser } from '../../../../services/userServices'
 import { toast } from 'react-toastify'
 
 const ModalDeleteUser = props => {
@@ -10,7 +10,6 @@ const ModalDeleteUser = props => {
     setShow,
     deleteUserData,
     resetDeleteUser,
-    fetchListUsers,
     fetchListUsersWithPaginate,
     setCurrentPage
   } = props

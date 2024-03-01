@@ -1,5 +1,3 @@
-import ModalCreateUser from '../ModalCreateUser'
-import TableUsers from '../TableUsers'
 import './ManageUsers.scss'
 import { useEffect, useState } from 'react'
 import {
@@ -8,10 +6,12 @@ import {
 } from '../../../../services/userServices'
 
 import { FcPlus } from 'react-icons/fc'
-import ModalUpdateUser from '../ModalUpdateUser'
-import ModalViewUser from '../ModalViewUser'
-import ModalDeleteUser from '../ModalDeleteUser'
-import TableUserPaginate from '../TableUserPaginate'
+import ModalCreateUser from './ModalCreateUser'
+import TableUsers from './TableUsers'
+import ModalUpdateUser from './ModalUpdateUser'
+import ModalViewUser from './ModalViewUser'
+import ModalDeleteUser from './ModalDeleteUser'
+import TableUserPaginate from './TableUserPaginate'
 
 const ManageUsers = props => {
   const [showModalCreateUser, setShowModalCreateUser] = useState(false)

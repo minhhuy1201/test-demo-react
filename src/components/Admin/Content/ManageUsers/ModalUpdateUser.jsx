@@ -3,18 +3,16 @@ import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
 import { FcPlus } from 'react-icons/fc'
 import { toast } from 'react-toastify'
-import { putUpdateUser } from '../../../services/userServices'
+import { putUpdateUser } from '../../../../services/userServices'
 import _ from 'lodash'
 
 const ModalUpdateUser = props => {
   const {
     show,
     setShow,
-    fetchListUsers,
     userUpdate,
     resetUpdateUser,
     fetchListUsersWithPaginate,
-    setCurrentPage,
     currentPage
   } = props
 
