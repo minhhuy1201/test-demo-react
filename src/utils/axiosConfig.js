@@ -6,6 +6,7 @@ const instance = axios.create({
   baseURL: 'http://localhost:8081/'
 })
 
+// loading bar
 NProgress.configure({
   showSpinner: false,
   trickleSpeed: 150
