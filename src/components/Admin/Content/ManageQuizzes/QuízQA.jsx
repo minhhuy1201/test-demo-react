@@ -1,13 +1,9 @@
 import { useState, useEffect } from 'react'
-import './ManageQuestions.scss'
+import './QuizQA.scss'
 import Select from 'react-select'
 import { FcPlus } from 'react-icons/fc'
 import { TbHeartPlus, TbHeartMinus } from 'react-icons/tb'
-import {
-  AiFillQqSquare,
-  AiOutlineMinusCircle,
-  AiOutlinePlusCircle
-} from 'react-icons/ai'
+import { AiOutlineMinusCircle, AiOutlinePlusCircle } from 'react-icons/ai'
 import { v4 as uuidv4 } from 'uuid'
 import _ from 'lodash'
 import { getAllQuizzesForAdmin } from '../../../../services/quizServices'
@@ -17,7 +13,7 @@ import {
 } from '../../../../services/questionServices'
 import { toast } from 'react-toastify'
 
-const ManageQuestions = props => {
+const QuizQA = props => {
   const [listQuizzes, setListQuizzes] = useState([])
   const [selectedQuiz, setselectedQuiz] = useState({})
   const initQuestions = [
@@ -194,11 +190,9 @@ const ManageQuestions = props => {
   useEffect(() => {
     fetchAllQuizzesData()
   }, [])
-
+  
   return (
     <div className='manage-question-container'>
-      <div className='title'>Manage Questions</div>
-      <hr />
       <div className='add-question'>
         <div className='col-7 form-group'>
           <label className='quiz-title mb-2' htmlFor='selectedQuiz'>
@@ -359,4 +353,4 @@ const ManageQuestions = props => {
   )
 }
 
-export default ManageQuestions
+export default QuizQA
