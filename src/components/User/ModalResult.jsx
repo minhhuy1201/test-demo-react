@@ -3,9 +3,7 @@ import Modal from 'react-bootstrap/Modal'
 
 const ModalResult = props => {
   const { show, setShow, resultData } = props
-
-  console.log(resultData)
-
+  
   const handleClose = () => {
     setShow(false)
   }

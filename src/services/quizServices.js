@@ -12,7 +12,6 @@ const getDataQuiz = quizId => {
 
 // Submit the quiz
 const postSubmitQuiz = data => {
-  console.log('....data: ', { ...data })
   return axios.post('/api/v1/quiz-submit', { ...data })
 }
 
@@ -49,6 +48,21 @@ const deleteQuiz = id => {
   return axios.delete(`/api/v1/quiz/${id}`)
 }
 
+// Assign Quiz to user
+const postAssignQuizToUser = (quizId, userId) => {
+  return axios.post('/api/v1/quiz-assign-to-user', { quizId, userId })
+}
+
+// Get question in quiz
+const getQuestionFromQuiz = quizId => {
+  return axios.get(`/api/v1/quiz-with-qa/${quizId}`)
+}
+
+// Upser (change data) of quiz
+const postUpsertQuiz = data => {
+  return axios.post('/api/v1/quiz-upsert-qa', { ...data })
+}
+
 export {
   getQuizByUser,
   getDataQuiz,
@@ -56,5 +70,8 @@ export {
   postCreateNewQuizz,
   getAllQuizzesForAdmin,
   putUpdateQuiz,
-  deleteQuiz
+  deleteQuiz,
+  postAssignQuizToUser,
+  getQuestionFromQuiz,
+  postUpsertQuiz
 }

@@ -7,7 +7,7 @@ import Select from 'react-select'
 import { postCreateNewQuizz } from '../../../../services/quizServices'
 
 const ModalCreateQuiz = props => {
-  const { show, setShow, fetchAllQuizzesData } = props
+  const { show, setShow, fetchAllQuizzesData, setTrigCreateQuiz } = props
   const [quizzInput, setQuizzInput] = useState({
     name: '',
     desc: '',
@@ -59,6 +59,7 @@ const ModalCreateQuiz = props => {
       toast.success(res.EM)
       handleClose()
       await fetchAllQuizzesData()
+      setTrigCreateQuiz(true)
     } else toast.error(res.EM)
   }
 
@@ -122,8 +123,7 @@ const ModalCreateQuiz = props => {
             </div>
             <div className='my-3'>
               <Select
-                // defaultValue={selectedOption}
-                // onChange={setSelectedOption}
+                defaultInputValue={quizzInput.difficult}
                 options={options}
                 name='difficult'
                 placeholder='Level of difficult'

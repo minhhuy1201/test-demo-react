@@ -6,27 +6,29 @@ import { TbHeartPlus, TbHeartMinus } from 'react-icons/tb'
 import { AiOutlineMinusCircle, AiOutlinePlusCircle } from 'react-icons/ai'
 import { v4 as uuidv4 } from 'uuid'
 import _ from 'lodash'
-import { getAllQuizzesForAdmin } from '../../../../services/quizServices'
 import {
-  postCreateNewQuestionForQuiz,
-  postCreateNewAnswerForQuestion
-} from '../../../../services/questionServices'
+  getAllQuizzesForAdmin,
+  getQuestionFromQuiz,
+  postUpsertQuiz
+} from '../../../../services/quizServices'
 import { toast } from 'react-toastify'
 
 const QuizQA = props => {
+  const { trigCreateQuiz, setTrigCreateQuiz } = props
+
   const [listQuizzes, setListQuizzes] = useState([])
   const [selectedQuiz, setselectedQuiz] = useState({})
   const initQuestions = [
     {
       id: uuidv4(),
       description: '',
-      image: '',
+      imageFile: '',
       previewImage: '',
       isValid: false,
       answers: [
         {
-          ansId: uuidv4(),
-          ansDescription: '',
+          id: uuidv4(),
+          description: '',
           isCorrect: false,
           isValid: false
         }
@@ -41,12 +43,12 @@ const QuizQA = props => {
       const newQuestion = {
         id: uuidv4(),
         description: '',
-        image: '',
+        imageFile: '',
         previewImage: '',
         answers: [
           {
-            ansId: uuidv4(),
-            ansDescription: '',
+            id: uuidv4(),
+            description: '',
             isCorrect: false
           }
         ]
@@ -62,7 +64,7 @@ const QuizQA = props => {
   }
 
   // Add or remove answer
-  const handleAddRemoveAnswer = (type, quesId, ansId) => {
+  const handleAddRemoveAnswer = (type, quesId, id) => {
     let questionClone = _.cloneDeep(questions)
     let quesIndex = questionClone.findIndex(item => item.id === quesId)
 
@@ -70,8 +72,8 @@ const QuizQA = props => {
     if (quesIndex > -1) {
       if (type === 'ADD') {
         const newAnswer = {
-          ansId: uuidv4(),
-          ansDescription: '',
+          id: uuidv4(),
+          description: '',
           isCorrect: false
         }
         questionClone[quesIndex].answers.push(newAnswer)
@@ -79,7 +81,7 @@ const QuizQA = props => {
         // else, remove answer
         questionClone[quesIndex].answers = questionClone[
           quesIndex
-        ].answers.filter(item => item.ansId !== ansId)
+        ].answers.filter(item => item.id !== id)
       }
     }
 
@@ -87,7 +89,7 @@ const QuizQA = props => {
   }
 
   // Handle on change the question description
-  const handleOnChange = (e, type, quesId, ansId) => {
+  const handleOnChange = (e, type, quesId, id) => {
     let questionClone = _.cloneDeep(questions)
     let quesIndex = questionClone.findIndex(item => item.id === quesId)
 
@@ -97,23 +99,23 @@ const QuizQA = props => {
         questionClone[quesIndex].isValid = true
       } else if (type === 'ANSWER') {
         let ansIndex = questionClone[quesIndex].answers.findIndex(
-          item => item.ansId === ansId
+          item => item.id === id
         )
 
         if (ansIndex > -1) {
-          questionClone[quesIndex].answers[ansIndex].ansDescription =
+          questionClone[quesIndex].answers[ansIndex].description =
             e.target.value
           questionClone[quesIndex].answers[ansIndex].isValid = true
         }
       } else if (type === 'FILE') {
-        questionClone[quesIndex].image = e.target.files[0]
+        questionClone[quesIndex].imageFile = e.target.files[0]
         questionClone[quesIndex].previewImage = URL.createObjectURL(
           e.target.files[0]
         )
       } else if (type === 'CHECKBOX') {
         questionClone[quesIndex].answers = questionClone[quesIndex].answers.map(
           item => {
-            if (item.ansId === ansId) {
+            if (item.id === id) {
               item.isCorrect = e.target.checked
             }
 
@@ -125,6 +127,15 @@ const QuizQA = props => {
 
     setQuestions(questionClone)
   }
+
+  // Convert image file to string base64 to upload to the server
+  const toBase64 = file =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader()
+      reader.readAsDataURL(file)
+      reader.onload = () => resolve(reader.result)
+      reader.onerror = reject
+    })
 
   // Handle submit questions for quizz
   const handleSubmitQuestionsForQuiz = async () => {
@@ -143,33 +154,35 @@ const QuizQA = props => {
       }
 
       item.answers.forEach(ans => {
-        if (!ans.ansDescription) {
+        if (!ans.description) {
           toast.error(`Answers for question ${idx + 1} cant empty`)
           return
         }
       })
     })
 
-    // Submit question -> FIRST, to have the question_id to add answer
-    for (const item of questions) {
-      let tempQues = await postCreateNewQuestionForQuiz(
-        +selectedQuiz.value,
-        item.description,
-        item.image
-      )
+    let questionClone = _.cloneDeep(questions)
+    console.log('clone: ', questionClone)
 
-      // Submit answer
-      for (const ans of item.answers) {
-        await postCreateNewAnswerForQuestion(
-          ans.ansDescription,
-          ans.isCorrect,
-          tempQues.DT.id // the id when create answer
-        )
+    for (let i = 0; i < questionClone.length; ++i) {
+      let q = questionClone[i]
+
+      if (q.imageFile) {
+        q.imageFile = await toBase64(q.imageFile)
       }
     }
 
-    toast.success('Create questions and answers succeed!!')
-    setQuestions(initQuestions)
+    console.log('clone1: ', questionClone)
+
+    let res = await postUpsertQuiz({
+      quizId: selectedQuiz.value,
+      questions: questionClone
+    })
+
+    if (res && res.EC === 0) {
+      toast.success(res.EM)
+      fetchQAFromQuiz()
+    }
   }
 
   const fetchAllQuizzesData = async () => {
@@ -179,7 +192,7 @@ const QuizQA = props => {
       let tempQuizzes = res.DT.map(item => {
         return {
           value: item.id,
-          label: `${item.id} - ${item.description}`
+          label: `${item.id} - ${item.name}`
         }
       })
 
@@ -187,10 +200,73 @@ const QuizQA = props => {
     }
   }
 
+  // Convert base64 to object file to display image
+  const urlToFile = (url, filename, mimeType) => {
+    if (url.startsWith('data:')) {
+      var arr = url.split(','),
+        mime = arr[0].match(/:(.*?);/)[1],
+        bstr = atob(arr[arr.length - 1]),
+        n = bstr.length,
+        u8arr = new Uint8Array(n)
+      while (n--) {
+        u8arr[n] = bstr.charCodeAt(n)
+      }
+      var file = new File([u8arr], filename, { type: mime || mimeType })
+      return Promise.resolve(file)
+    }
+    return fetch(url)
+      .then(res => res.arrayBuffer())
+      .then(buf => new File([buf], filename, { type: mimeType }))
+  }
+
+  // Get q/a from quiz
+  const fetchQAFromQuiz = async () => {
+    let res = await getQuestionFromQuiz(selectedQuiz.value)
+
+    if (res && res.EC === 0) {
+      if (!_.isEmpty(res.DT.qa)) {
+        let newQ = []
+
+        res.DT.qa.forEach(async item => {
+          if (item.imageFile) {
+            item.imageFile = await urlToFile(
+              `data:image/jpeg;base64,${item.imageFile}`,
+              `imgQues-${item.id}.jpeg`,
+              'image/jpeg'
+            )
+
+            item.previewImage = URL.createObjectURL(item.imageFile)
+          }
+          item.isValid = true
+
+          let newA = []
+          item.answers.forEach(ans => {
+            ans.isValid = true
+
+            newA.push(ans)
+          })
+          item.answers = newA
+
+          newQ.push(item)
+        })
+
+        setQuestions(newQ)
+      } else setQuestions(initQuestions)
+    }
+  }
+
   useEffect(() => {
     fetchAllQuizzesData()
-  }, [])
-  
+
+    if (trigCreateQuiz === true) setTrigCreateQuiz(false)
+  }, [trigCreateQuiz])
+
+  useEffect(() => {
+    if (selectedQuiz && selectedQuiz.value) {
+      fetchQAFromQuiz()
+    }
+  }, [selectedQuiz])
+
   return (
     <div className='manage-question-container'>
       <div className='add-question'>
@@ -271,20 +347,15 @@ const QuizQA = props => {
                   {/* Answer content */}
                   {item.answers &&
                     item.answers.length > 0 &&
-                    item.answers.map((ansItem, ansIdx) => {
+                    item.answers.map((ansItem, idx) => {
                       return (
-                        <div key={ansItem.ansId} className='answer-content'>
+                        <div key={ansItem.id} className='answer-content'>
                           <input
                             className='form-check-input is-correct'
                             type='checkbox'
                             checked={ansItem.isCorrect}
                             onChange={e =>
-                              handleOnChange(
-                                e,
-                                'CHECKBOX',
-                                item.id,
-                                ansItem.ansId
-                              )
+                              handleOnChange(e, 'CHECKBOX', item.id, ansItem.id)
                             }
                           />
                           <div className='form-floating answer-name'>
@@ -297,17 +368,12 @@ const QuizQA = props => {
                                   : 'form-control is-invalid'
                               }
                               placeholder='.'
-                              value={ansItem.ansDescription}
+                              value={ansItem.description}
                               onChange={e =>
-                                handleOnChange(
-                                  e,
-                                  'ANSWER',
-                                  item.id,
-                                  ansItem.ansId
-                                )
+                                handleOnChange(e, 'ANSWER', item.id, ansItem.id)
                               }
                             />
-                            <label>Answer {ansIdx + 1}</label>
+                            <label>Answer {idx + 1}</label>
                           </div>
                           <div className='btn-group'>
                             <span
@@ -323,7 +389,7 @@ const QuizQA = props => {
                                   handleAddRemoveAnswer(
                                     'REMOVE',
                                     item.id,
-                                    ansItem.ansId
+                                    ansItem.id
                                   )
                                 }
                               >

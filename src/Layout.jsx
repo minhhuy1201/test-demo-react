@@ -1,8 +1,7 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
-
+import { Route, Routes } from 'react-router-dom'
+import PrivateRoute from './routes/PrivateRoute'
 // components
 import App from './App'
-import User from './components/User/User'
 import Admin from './components/Admin/Admin'
 import HomePage from './components/Home/HomePage'
 import ManageUsers from './components/Admin/Content/ManageUsers/ManageUsers'
@@ -37,11 +36,25 @@ const Layout = props => {
         <Route path='/' element={<App />}>
           <Route index element={<HomePage />} />
           {/* List all quiz for THAT user */}
-          <Route path='user' element={<ListQuiz />} />
+          <Route
+            path='user'
+            element={
+              <PrivateRoute>
+                <ListQuiz />
+              </PrivateRoute>
+            }
+          />
         </Route>
         <Route path='/quiz/:id' element={<DetailQuiz />} />
 
-        <Route path='/admin' element={<Admin />}>
+        <Route
+          path='/admin'
+          element={
+            <PrivateRoute>
+              <Admin />
+            </PrivateRoute>
+          }
+        >
           <Route index element={<Dashboard />} />
           <Route path='manage-users' element={<ManageUsers />} />
           <Route path='manage-quizzes' element={<ManageQuizzes />} />
