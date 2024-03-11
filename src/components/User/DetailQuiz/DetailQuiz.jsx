@@ -5,6 +5,7 @@ import _ from 'lodash'
 import './DetailQuiz.scss'
 import Question from './../Question/Question'
 import ModalResult from '../ModalResult'
+import CounterBoard from './CounterBoard/CounterBoard'
 
 const DetailQuiz = props => {
   const param = useParams()
@@ -83,13 +84,12 @@ const DetailQuiz = props => {
 
     // SUBMIT API
     let res = await postSubmitQuiz(payload)
-    console.log(res)
 
     if (res && res.EC === 0) {
       setResultData({
         countCorrect: res.DT.countCorrect,
         countTotal: res.DT.countTotal,
-        quizData: {...res.DT.quizData}
+        quizData: { ...res.DT.quizData }
       })
       setIsShowModalResult(true)
     } else {
@@ -151,7 +151,13 @@ const DetailQuiz = props => {
           </button>
         </div>
       </div>
-      <div className='right-content'>Count Down</div>
+      <div className='right-content'>
+        <CounterBoard
+          handleFinishBtn={handleFinishBtn}
+          dataQuiz={dataQuiz}
+          setQuestionIdx={setQuestionIdx}
+        />
+      </div>
       <ModalResult
         show={isShowModalResult}
         setShow={setIsShowModalResult}

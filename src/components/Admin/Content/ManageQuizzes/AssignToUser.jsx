@@ -1,14 +1,27 @@
 import './AssignToUser.scss'
 import { useState, useEffect } from 'react'
 import Select from 'react-select'
-import { getAllQuizzesForAdmin } from '../../../../services/quizServices'
+import {
+  getAllQuizzesForAdmin,
+  postAssignQuizToUser
+} from '../../../../services/quizServices'
 import { getAllUser } from '../../../../services/userServices'
+import { toast } from 'react-toastify'
 
 const AssignToUser = props => {
+  const { trigCreateQuiz, setTrigCreateQuiz } = props
+
   const [listQuizzes, setListQuizzes] = useState([])
   const [selectedQuiz, setselectedQuiz] = useState({})
   const [listUsers, setListUsers] = useState([])
   const [selectedUser, setselectedUser] = useState({})
+
+  const handleAssignQuiz = async (quizId, userId) => {
+    let res = await postAssignQuizToUser(quizId, userId)
+
+    if (res && res.EC === 0) toast.success(res.EM)
+    else toast.error(res.EM)
+  }
 
   const fetchAllQuizzesData = async () => {
     let res = await getAllQuizzesForAdmin()
@@ -17,7 +30,7 @@ const AssignToUser = props => {
       let tempQuizzes = res.DT.map(item => {
         return {
           value: item.id,
-          label: `${item.id} - ${item.description}`
+          label: `${item.id} - ${item.name}`
         }
       })
 
@@ -41,7 +54,9 @@ const AssignToUser = props => {
   useEffect(() => {
     fetchAllQuizzesData()
     fetchAllUserData()
-  }, [])
+
+    if (trigCreateQuiz === true) setTrigCreateQuiz(false)
+  }, [trigCreateQuiz])
 
   return (
     <div className='assign-quiz-container row'>
@@ -68,7 +83,14 @@ const AssignToUser = props => {
         />
       </div>
       <div className='mt-3'>
-        <button className='btn btn-warning'>Confirm Assign</button>
+        <button
+          onClick={() =>
+            handleAssignQuiz(selectedQuiz.value, selectedUser.value)
+          }
+          className='btn btn-warning'
+        >
+          Confirm Assign
+        </button>
       </div>
     </div>
   )

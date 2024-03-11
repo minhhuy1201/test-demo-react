@@ -17,6 +17,7 @@ const ManageQuizzes = props => {
   const [showModalUpdateQuiz, setshowModalUpdateQuiz] = useState(false)
   const [quizDeleteData, setQuizDeleteData] = useState({})
   const [quizUpdateData, setQuizUpdateData] = useState({})
+  const [trigCreateQuiz, setTrigCreateQuiz] = useState(false)
 
   const handleDeleteBtn = quiz => {
     setQuizDeleteData(quiz)
@@ -79,7 +80,10 @@ const ManageQuizzes = props => {
             <div className='title'>Update Q/A Quizzes</div>
           </Accordion.Header>
           <Accordion.Body>
-            <QuizQA />
+            <QuizQA
+              trigCreateQuiz={trigCreateQuiz}
+              setTrigCreateQuiz={setTrigCreateQuiz}
+            />
           </Accordion.Body>
         </Accordion.Item>
         <Accordion.Item eventKey='2'>
@@ -87,7 +91,10 @@ const ManageQuizzes = props => {
             <div className='title'>Assign Quiz To User</div>
           </Accordion.Header>
           <Accordion.Body>
-            <AssignToUser />
+            <AssignToUser
+              trigCreateQuiz={trigCreateQuiz}
+              setTrigCreateQuiz={setTrigCreateQuiz}
+            />
           </Accordion.Body>
         </Accordion.Item>
       </Accordion>
@@ -96,6 +103,7 @@ const ManageQuizzes = props => {
         show={showModalCreateQuiz}
         setShow={setShowModalCreateQuiz}
         fetchAllQuizzesData={fetchAllQuizzesData}
+        setTrigCreateQuiz={setTrigCreateQuiz}
       />
       <ModalUpdateQuiz
         show={showModalUpdateQuiz}
