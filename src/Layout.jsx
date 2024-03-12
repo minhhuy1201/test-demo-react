@@ -1,37 +1,24 @@
 import { Route, Routes } from 'react-router-dom'
 import PrivateRoute from './routes/PrivateRoute'
 // components
+import { Suspense } from 'react'
 import App from './App'
 import Admin from './components/Admin/Admin'
 import HomePage from './components/Home/HomePage'
 import ManageUsers from './components/Admin/Content/ManageUsers/ManageUsers'
-import Dashboard from './components/Admin/Content/Dashboard'
+import Dashboard from './components/Admin/Content/Dashboard/Dashboard'
 import Login from './components/Auth/Login'
 import { ToastContainer, toast } from 'react-toastify'
 import Signup from './components/Auth/Signup'
 import ListQuiz from './components/User/ListQuiz/ListQuiz'
 import DetailQuiz from './components/User/DetailQuiz/DetailQuiz'
-import notFoundImg from '../src/assets/not_found.png'
 import ManageQuizzes from './components/Admin/Content/ManageQuizzes/ManageQuizzes'
 import ManageQuestions from './components/Admin/Content/ManageQuestions/ManageQuestions'
-
-const NotFound = () => {
-  return (
-    <div className=' container text-center fs-2 fw-bold'>
-      <img
-        className='img-fluid rounded'
-        style={{ backgroundColor: 'transparent' }}
-        src={notFoundImg}
-        alt='not-found'
-      />
-      <p className='alert alert-danger'>PAGE NOT FOUND</p>
-    </div>
-  )
-}
+import NotFound from './components/NotFound'
 
 const Layout = props => {
   return (
-    <>
+    <Suspense fallback={<div className='fs-1'>Loading...........</div>}>
       <Routes>
         <Route path='/' element={<App />}>
           <Route index element={<HomePage />} />
@@ -79,7 +66,7 @@ const Layout = props => {
         theme='light'
       />
       <ToastContainer />
-    </>
+    </Suspense>
   )
 }
 
