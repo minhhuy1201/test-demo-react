@@ -6,6 +6,7 @@ import { toast } from 'react-toastify'
 import { useDispatch } from 'react-redux'
 import { doLogin } from '../../redux/action/userAction'
 import { ImSpinner2 } from 'react-icons/im'
+import LanguagesChange from '../Header/LanguagesChange'
 
 const Login = props => {
   const [formInput, setFormInput] = useState({
@@ -85,9 +86,8 @@ const Login = props => {
   return (
     <div className='login-container'>
       <div className='login-header'>
-        <span>Don't have an account yet?</span>
-        <button onClick={() => navigate('/signup')}>Sign up</button>
         <a href='#!'>Contact us</a>
+        <LanguagesChange />
       </div>
       <div className='login-title col-2 mx-auto'>Huy Kirito</div>
       <div className='login-welcome col-2 mx-auto'>Hello, who's this?</div>
@@ -123,16 +123,21 @@ const Login = props => {
           />
           {formError.password && <p>{formError.password}</p>}
         </div>
-        <span>Forgot password?</span>
         <div>
+          <span>Forgot password?</span>
           <button type='submit' className='login-submit' disabled={isLoading}>
             {isLoading === true && <ImSpinner2 className='spinner' />}
-            <span>Log in to Huy Kirito</span>
+            <span>Log in</span>
+          </button>
+          <span>Don't have an account yet?</span>
+
+          <button onClick={() => navigate('/signup')} className='login-submit'>
+            <span>Sign up</span>
           </button>
         </div>
         <div className='text-center back-homepage'>
           <button onClick={() => navigate('/')}>
-            &#60;&#60; Go to HomePage
+            &#60;&#60; HomePage
           </button>
         </div>
       </form>

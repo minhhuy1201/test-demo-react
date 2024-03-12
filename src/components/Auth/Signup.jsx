@@ -96,10 +96,6 @@ const Signup = props => {
 
   return (
     <div className='signup-container'>
-      <div className='signup-header'>
-        <span>Already have an account?</span>
-        <button onClick={() => navigate('/login')}>Log in</button>
-      </div>
       <div className='signup-title col-2 mx-auto'>Huy Kirito</div>
       <div className='signup-welcome col-2 mx-auto'>Sign up and come on in</div>
 
@@ -166,10 +162,14 @@ const Signup = props => {
           <button type='submit' className='signup-submit'>
             Create my account
           </button>
+          <span>Already have an account ?</span>
+          <button className='signup-submit' onClick={() => navigate('/login')}>
+            Log in
+          </button>
         </div>
         <div className='text-center back-homepage'>
           <button onClick={() => navigate('/')}>
-            &#60;&#60; Go to HomePage
+            &#60;&#60; HomePage
           </button>
         </div>
       </form>

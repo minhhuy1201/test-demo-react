@@ -11,4 +11,11 @@ const postSignup = (email, password, username) => {
   return axios.post('api/v1/register', { email, username, password })
 }
 
-export { postLogin, postSignup }
+const postLogout = (email, refresh_token) => {
+  return axios.post('api/v1/logout', {
+    email,
+    refresh_token
+  })
+}
+
+export { postLogin, postSignup, postLogout }

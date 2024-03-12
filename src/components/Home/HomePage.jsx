@@ -2,10 +2,12 @@ import './HomePage.scss'
 import videoHomePage from '../../assets/video-homepage.mp4'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 
 const HomePage = props => {
   const isAuthenticated = useSelector(state => state.user.isAuthenticated)
   const navigate = useNavigate()
+  const { t } = useTranslation()
 
   return (
     <div className='homepage-container'>
@@ -14,12 +16,8 @@ const HomePage = props => {
       </video>
 
       <div className='home-page-content'>
-        <div className='title-1'>Lorem ipsum dolor sit amet.</div>
-        <div className='title-2'>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia
-          corrupti, eligendi vel corporis molestiae dolores aspernatur aliquam
-          molestias quibusdam laborum!
-        </div>
+        <div className='title-1'>{t('home-container.title-1')}</div>
+        <div className='title-2'>{t('home-container.title-2')}</div>
         <div>
           {/* When user not login -> navigate to login */}
           {isAuthenticated === false ? (

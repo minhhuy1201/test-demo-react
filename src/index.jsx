@@ -1,15 +1,17 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-
-import reportWebVitals from './reportWebVitals'
+import i18n from './utils/i18n'
 import { Provider } from 'react-redux'
 import { store, persistor } from './redux/store'
+import { BrowserRouter } from 'react-router-dom'
 import { PersistGate } from 'redux-persist/integration/react'
+
+import reportWebVitals from './reportWebVitals'
+import 'react-perfect-scrollbar/dist/css/styles.css'
+import '/node_modules/flag-icons/css/flag-icons.min.css'
 import 'nprogress/nprogress.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import { BrowserRouter } from 'react-router-dom'
 import Layout from './Layout'
-import 'react-perfect-scrollbar/dist/css/styles.css'
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
