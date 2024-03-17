@@ -13,8 +13,6 @@ import DoQuizHistory from './DoQuizHistory'
 const ModalUserProfile = props => {
   const { show, setShow, account } = props
 
-  console.table(account)
-
   const handleClose = () => {
     setShow(false)
   }

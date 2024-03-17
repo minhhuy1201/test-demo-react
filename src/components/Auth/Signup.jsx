@@ -36,6 +36,12 @@ const Signup = props => {
   }
 
   const validateForm = () => {
+
+  }
+
+  const handleSignup = async event => {
+    event.preventDefault()
+    // VALIDATE
     let inputError = {
       email: '',
       password: '',
@@ -56,7 +62,9 @@ const Signup = props => {
         password: 'Password should be not empty'
       })
       return
-    } else if (formInput.password.length < 6) {
+    }
+
+    if (formInput.password.length < 6) {
       setFormError({
         ...inputError,
         password: 'Password length >= 6'
@@ -73,12 +81,6 @@ const Signup = props => {
     }
 
     setFormError({ ...inputError })
-  }
-
-  const handleSignup = async event => {
-    event.preventDefault()
-    // VALIDATE
-    validateForm()
 
     // CALL API
     let data = await postSignup(
@@ -86,7 +88,6 @@ const Signup = props => {
       formInput.password,
       formInput.userName
     )
-    console.log('check data: ', data)
 
     if (data && data.EC === 0) {
       toast.success(data.EM)
@@ -168,9 +169,7 @@ const Signup = props => {
           </button>
         </div>
         <div className='text-center back-homepage'>
-          <button onClick={() => navigate('/')}>
-            &#60;&#60; HomePage
-          </button>
+          <button onClick={() => navigate('/')}>&#60;&#60; HomePage</button>
         </div>
       </form>
     </div>
