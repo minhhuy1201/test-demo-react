@@ -22,11 +22,11 @@ const HomePage = props => {
           {/* When user not login -> navigate to login */}
           {isAuthenticated === false ? (
             <button onClick={() => navigate('/login')} className='title-3'>
-              Get start. It's free
+              {t('home-container.title-3')}
             </button>
           ) : (
             <button onClick={() => navigate('/user')} className='title-3'>
-              Do quiz now
+              {t('home-container.title-3-login')}
             </button>
           )}
         </div>

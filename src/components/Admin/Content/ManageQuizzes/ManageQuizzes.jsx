@@ -9,6 +9,8 @@ import ModalUpdateQuiz from './ModalUpdateQuiz'
 import Accordion from 'react-bootstrap/Accordion'
 import QuizQA from './QuízQA'
 import AssignToUser from './AssignToUser'
+import Tab from 'react-bootstrap/Tab'
+import Tabs from 'react-bootstrap/Tabs'
 
 const ManageQuizzes = props => {
   const [listQuizzes, setListQuizzes] = useState([])
@@ -46,58 +48,47 @@ const ManageQuizzes = props => {
 
   return (
     <div className='manage-quiz-container'>
-      <Accordion defaultActiveKey='0'>
-        {/* Manage Quizzes */}
-        <Accordion.Item eventKey='0'>
-          <Accordion.Header>
-            <div className='title'>Manage Quizzes</div>
-          </Accordion.Header>
-          <Accordion.Body>
-            <div className='btn-add-new'>
-              <button
-                className='btn btn-primary'
-                onClick={e => setShowModalCreateQuiz(true)}
-              >
-                <FcPlus style={{ marginRight: '5px' }} /> Add New Quiz
-              </button>
-            </div>
-
-            <div className='list-quizzes'>
-              <TableQuizzes
-                listQuizzes={listQuizzes}
-                setListQuizzes={setListQuizzes}
-                fetchAllQuizzesData={fetchAllQuizzesData}
-                handleDeleteBtn={handleDeleteBtn}
-                handleUpdateBtn={handleUpdateBtn}
-              />
-            </div>
-          </Accordion.Body>
-        </Accordion.Item>
-
-        {/* Manage questions and answers */}
-        <Accordion.Item eventKey='1'>
-          <Accordion.Header>
-            <div className='title'>Update Q/A Quizzes</div>
-          </Accordion.Header>
-          <Accordion.Body>
-            <QuizQA
-              trigCreateQuiz={trigCreateQuiz}
-              setTrigCreateQuiz={setTrigCreateQuiz}
+      <Tabs
+        defaultActiveKey='mng-quizzes'
+        id='justify-tab-example'
+        className='mb-3'
+        justify
+      >
+        <Tab eventKey='mng-quizzes' title='Manage Quizzes'>
+          <div className='title'>Manage Quizzes</div>
+          <div className='btn-add-new'>
+            <button
+              className='btn btn-primary'
+              onClick={e => setShowModalCreateQuiz(true)}
+            >
+              <FcPlus style={{ marginRight: '5px' }} /> Add New Quiz
+            </button>
+          </div>
+          <div className='list-quizzes'>
+            <TableQuizzes
+              listQuizzes={listQuizzes}
+              setListQuizzes={setListQuizzes}
+              fetchAllQuizzesData={fetchAllQuizzesData}
+              handleDeleteBtn={handleDeleteBtn}
+              handleUpdateBtn={handleUpdateBtn}
             />
-          </Accordion.Body>
-        </Accordion.Item>
-        <Accordion.Item eventKey='2'>
-          <Accordion.Header>
-            <div className='title'>Assign Quiz To User</div>
-          </Accordion.Header>
-          <Accordion.Body>
-            <AssignToUser
-              trigCreateQuiz={trigCreateQuiz}
-              setTrigCreateQuiz={setTrigCreateQuiz}
-            />
-          </Accordion.Body>
-        </Accordion.Item>
-      </Accordion>
+          </div>
+        </Tab>
+        <Tab eventKey='manage-ques-ans' title='Update Q/A Quizzes'>
+          <div className='title'>Update Q/A Quizzes</div>
+          <QuizQA
+            trigCreateQuiz={trigCreateQuiz}
+            setTrigCreateQuiz={setTrigCreateQuiz}
+          />
+        </Tab>
+        <Tab eventKey='assign-quiz' title='Assign Quiz To User'>
+          <div className='title'>Assign Quiz To User</div>
+          <AssignToUser
+            trigCreateQuiz={trigCreateQuiz}
+            setTrigCreateQuiz={setTrigCreateQuiz}
+          />
+        </Tab>
+      </Tabs>
 
       <ModalCreateQuiz
         show={showModalCreateQuiz}

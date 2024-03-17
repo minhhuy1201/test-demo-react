@@ -150,11 +150,11 @@ const ModalCreateUser = props => {
         </Modal.Body>
 
         <Modal.Footer>
-          <Button variant='secondary' onClick={handleClose}>
-            Close
-          </Button>
           <Button variant='primary' onClick={handleSubmitCreateUser}>
             Save
+          </Button>
+          <Button variant='secondary' onClick={handleClose}>
+            Close
           </Button>
         </Modal.Footer>
       </Modal>

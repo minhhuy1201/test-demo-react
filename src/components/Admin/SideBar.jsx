@@ -13,6 +13,7 @@ import { DiReact } from 'react-icons/di'
 import { MdDashboard } from 'react-icons/md'
 import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
+import { GiSpinningBlades } from 'react-icons/gi'
 
 import sidebarBg from '../../assets/bg2.jpg'
 
@@ -46,33 +47,29 @@ const SideBar = props => {
             }}
             onClick={() => navigate('/')}
           >
-            <DiReact
-              size={'3em'}
-              color={'00bfff'}
-              style={{ marginRight: '10px' }}
-            />
+            <GiSpinningBlades className='brand-icon' />
             Huy Kirito
           </div>
         </SidebarHeader>
 
         <SidebarContent>
           <Menu iconShape='circle'>
-            <MenuItem icon={<MdDashboard />}>
+            <MenuItem className='sidebar-link' icon={<MdDashboard />}>
               Dashboard
               <Link to='/admin' />
             </MenuItem>
           </Menu>
           <Menu iconShape='circle'>
-            <SubMenu icon={<FaGem />} title='Fetures'>
-              <MenuItem>
+            <SubMenu icon={<FaGem />} title='Fetures' className='sidebar-link'>
+              <MenuItem className='sidebar-link'>
                 Users Managements
                 <Link to='/admin/manage-users' />
               </MenuItem>
-              <MenuItem>
+              <MenuItem className='sidebar-link'>
                 Quizzes Managements
                 <Link to='/admin/manage-quizzes' />
               </MenuItem>
-              <MenuItem>
+              <MenuItem className='sidebar-link'>
                 Questions Managements
                 <Link to='/admin/manage-questions' />
               </MenuItem>

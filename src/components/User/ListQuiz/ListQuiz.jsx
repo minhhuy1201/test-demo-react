@@ -28,11 +28,7 @@ const ListQuiz = props => {
         arrQuiz.length > 0 &&
         arrQuiz.map((quiz, idx) => {
           return (
-            <div
-              key={`${idx} - quiz`}
-              className='card'
-              style={{ width: '18rem' }}
-            >
+            <div key={`${idx} - quiz`} className='card'>
               <img
                 src={`data:image/jpeg;base64,${quiz.image}`}
                 className='card-img-top'

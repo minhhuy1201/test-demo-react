@@ -1,6 +1,18 @@
 {
+  "header": {
+    "nav-home": "Trang chủ",
+    "nav-do-quiz": "Làm bài",
+    "nav-admin": "Admin",
+    "setting": "Cài đặt",
+    "profile": "Trang cá nhân",
+    "logout": "Đăng xuất",
+    "login": "Đăng nhập",
+    "signup": "Đăng ký"
+  },
   "home-container": {
     "title-1": "Có một cách tốt hơn để hỏi !",
-    "title-2": "Soạn và làm bài kiểm tra chưa bao giờ dễ đến thế !\nĐăng nhập / đăng ký để trải nghiệm đầy đủ chức năng"
+    "title-2": "Soạn và làm bài kiểm tra chưa bao giờ dễ đến thế !\nĐăng nhập / đăng ký để trải nghiệm đầy đủ chức năng",
+    "title-3-login": "Làm bài kiểm tra ngay",
+    "title-3": "Bắt đầu làm bài ngay !!"
   }
 }
