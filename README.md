@@ -1,4 +1,4 @@
-# This is my personal project for learn ReactJS
+# This is my personal project to learn ReactJS
 ## About this quiz-website:
 - Admin
   - Manage users
