@@ -159,14 +159,14 @@ const ModalCreateQuiz = props => {
         </Modal.Body>
 
         <Modal.Footer>
+          <Button variant='primary' onClick={handleSubmitCreateQuizz}>
+            Save
+          </Button>
           <Button variant='secondary' onClick={clearInput}>
             Clear Input
           </Button>
           <Button variant='secondary' onClick={handleClose}>
             Close
-          </Button>
-          <Button variant='primary' onClick={handleSubmitCreateQuizz}>
-            Save
           </Button>
         </Modal.Footer>
       </Modal>

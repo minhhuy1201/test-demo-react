@@ -2,77 +2,122 @@ import './Dashboard.scss'
 import {
   BarChart,
   Bar,
-  Rectangle,
   XAxis,
   YAxis,
-  CartesianGrid,
   Tooltip,
   Legend,
   ResponsiveContainer
 } from 'recharts'
+import { getOverView } from '../../../../services/apiServices'
+import { useState, useEffect } from 'react'
 
 const Dashboard = props => {
-  const data = [
-    {
-      name: 'Page A',
-      uv: 4000,
-      pv: 2400,
-      amt: 2400
-    },
-    {
-      name: 'Page B',
-      uv: 3000,
-      pv: 1398,
-      amt: 2210
-    },
-    {
-      name: 'Page C',
-      uv: 2000,
-      pv: 9800,
-      amt: 2290
-    },
-    {
-      name: 'Page D',
-      uv: 2780,
-      pv: 3908,
-      amt: 2000
-    },
-    {
-      name: 'Page E',
-      uv: 1890,
-      pv: 4800,
-      amt: 2181
-    },
-    {
-      name: 'Page F',
-      uv: 2390,
-      pv: 3800,
-      amt: 2500
-    },
-    {
-      name: 'Page G',
-      uv: 3490,
-      pv: 4300,
-      amt: 2100
+  const [overViewData, setOverViewData] = useState([])
+  const [chartData, setChartData] = useState([])
+
+  const fetchDataOverView = async () => {
+    let res = await getOverView()
+
+    if (res && res.EC === 0) {
+      setOverViewData(res.DT)
+
+      // process data to display in chart
+      let Us = 0,
+        Qz = 0,
+        Qs = 0,
+        Ans = 0
+      Us = res?.DT?.users?.total ?? 0
+      Qz = res?.DT?.others?.countQuiz ?? 0
+      Qs = res?.DT?.others?.countQuestions ?? 0
+      Ans = res?.DT?.others?.countAnswers ?? 0
+
+      const data = [
+        {
+          name: 'Users',
+          Us
+        },
+        {
+          name: 'Quizzes',
+          Qz
+        },
+        {
+          name: 'Questions',
+          Qs
+        },
+        {
+          name: 'Answers',
+          Ans
+        }
+      ]
+
+      setChartData(data)
     }
-  ]
+  }
+
+  useEffect(() => {
+    fetchDataOverView()
+  }, [])
 
   return (
     <div className='dashboard-container'>
       <div className='dashboard-title'>Analytics Dashboard</div>
       <div className='dashboard-content'>
         <div className='left-content'>
-          <div className='c-child'>Total Users</div>
-          <div className='c-child'>Total Quizzes</div>
-          <div className='c-child'>Total Questions</div>
-          <div className='c-child'>Total Answers</div>
+          <div className='c-child users'>
+            <span className='text-1'>Total Users</span>
+            <span className='text-2'>
+              {overViewData &&
+              overViewData.users &&
+              overViewData.users.total ? (
+                <>{overViewData.users.total}</>
+              ) : (
+                <>0</>
+              )}
+            </span>
+          </div>
+          <div className='c-child quizzes'>
+            <span className='text-1'>Total Quizzes</span>
+            <span className='text-2'>
+              {overViewData &&
+              overViewData.others &&
+              overViewData.others.countQuiz ? (
+                <>{overViewData.others.countQuiz}</>
+              ) : (
+                <>0</>
+              )}
+            </span>
+          </div>
+          <div className='c-child questions'>
+            <span className='text-1'>Total Questions</span>
+            <span className='text-2'>
+              {overViewData &&
+              overViewData.others &&
+              overViewData.others.countQuestions ? (
+                <>{overViewData.others.countQuestions}</>
+              ) : (
+                <>0</>
+              )}
+            </span>
+          </div>
+          <div className='c-child answers'>
+            <span className='text-1'>Total Answers</span>
+            <span className='text-2'>
+              {overViewData &&
+              overViewData.others &&
+              overViewData.others.countAnswers ? (
+                <>{overViewData.others.countAnswers}</>
+              ) : (
+                <>0</>
+              )}
+            </span>
+          </div>
         </div>
         <div className='right-content'>
-          <ResponsiveContainer width='100%' height='100%'>
+          <ResponsiveContainer width='95%' height={400}>
             <BarChart
               width={500}
-              height={300}
-              data={data}
+              height={`100%`}
+              data={chartData}
               margin={{
                 top: 5,
                 right: 30,
@@ -80,21 +125,14 @@ const Dashboard = props => {
                 bottom: 5
               }}
             >
-              <CartesianGrid strokeDasharray='3 3' />
               <XAxis dataKey='name' />
-              <YAxis />
               <Tooltip />
+              <YAxis />
               <Legend />
-              <Bar
-                dataKey='pv'
-                fill='#8884d8'
-                activeBar={<Rectangle fill='pink' stroke='blue' />}
-              />
-              <Bar
-                dataKey='uv'
-                fill='#82ca9d'
-                activeBar={<Rectangle fill='gold' stroke='purple' />}
-              />
+              <Bar dataKey='Us' fill='#405189' />
+              <Bar dataKey='Qz' fill='#3EA5F4' />
+              <Bar dataKey='Qs' fill='#FDA005' />
+              <Bar dataKey='Ans' fill='#F1526E' />
             </BarChart>
           </ResponsiveContainer>
         </div>

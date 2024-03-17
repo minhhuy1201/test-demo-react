@@ -25,7 +25,7 @@ const getUserWithPaginate = (page, limit) => {
   return axios.get(`api/v1/participant?page=${page}&limit=${limit}`)
 }
 
-// UPDATE A USER
+// UPDATE A USER BY ADMIN
 const putUpdateUser = (id, userName, role, userImg) => {
   const data = new FormData()
   data.append('id', id)
@@ -40,9 +40,28 @@ const putUpdateUser = (id, userName, role, userImg) => {
   })
 }
 
-// DELETE A USER
+const postUpdateProfile = (username, userImage) => {
+  const data = new FormData()
+  data.append('username', username)
+  data.append('userImage', userImage)
+
+  return axios.post('api/v1/profile', data)
+}
+
+const postChangePass = (current_password, new_password) => {
+  return axios.post('api/v1/change-password', {
+    current_password,
+    new_password
+  })
+}
+
+// DELETE A USER BY ADMIN
 const deleteUser = userId => {
   return axios.delete('api/v1/participant', { data: { id: userId } })
+}
+
+const getQuizHistory = () => {
+  return axios.get('api/v1/history')
 }
 
 export {
@@ -50,5 +69,8 @@ export {
   getAllUser,
   getUserWithPaginate,
   putUpdateUser,
-  deleteUser
+  deleteUser,
+  postUpdateProfile,
+  postChangePass,
+  getQuizHistory
 }

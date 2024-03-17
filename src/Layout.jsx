@@ -15,6 +15,7 @@ import DetailQuiz from './components/User/DetailQuiz/DetailQuiz'
 import ManageQuizzes from './components/Admin/Content/ManageQuizzes/ManageQuizzes'
 import ManageQuestions from './components/Admin/Content/ManageQuestions/ManageQuestions'
 import NotFound from './components/NotFound'
+import ProtectAdminRoute from './routes/ProtectAdminRoute'
 
 const Layout = props => {
   return (
@@ -31,15 +32,15 @@ const Layout = props => {
               </PrivateRoute>
             }
           />
+          <Route path='/quiz/:id' element={<DetailQuiz />} />
         </Route>
-        <Route path='/quiz/:id' element={<DetailQuiz />} />
 
         <Route
           path='/admin'
           element={
-            <PrivateRoute>
+            <ProtectAdminRoute>
               <Admin />
-            </PrivateRoute>
+            </ProtectAdminRoute>
           }
         >
           <Route index element={<Dashboard />} />

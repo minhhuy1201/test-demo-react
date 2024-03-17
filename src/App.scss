@@ -6,10 +6,15 @@ body {
   font-family            : apercu-pro, -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif !important;
   -webkit-font-smoothing : antialiased;
   -moz-osx-font-smoothing: grayscale;
+  transition             : all linear 1s;
 }
 
 
 .languages {
+  &.basic-nav-dropdown1 {
+    height: 40px;
+  }
+
   .dropdown-toggle::after {
     display: none !important;
   }
@@ -17,6 +22,29 @@ body {
 
 .app-container {
   .header-container {
+    .navbar-brand {
+      display    : flex;
+      align-items: center;
+
+      .brand-icon {
+        animation: spin 2s linear infinite;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      span {
+        margin-left: 10px;
+      }
+    }
+
     .btn-sign-in {
       border-radius: 5px;
       border       : 1px solid #535353;
@@ -45,10 +73,25 @@ body {
       padding-top     : 20px;
 
       .nav-link {
+        border-radius: 3px;
+
         &.active {
           color      : #00bfff;
           font-weight: bold;
         }
+
+        &:hover {
+          transform       : scale(1.1);
+          background-color: #00bfff;
+          color           : white;
+        }
+      }
+    }
+
+    .item-dropdown {
+      &:hover {
+        background-color: #00bfff;
+        color           : white;
       }
     }
   }

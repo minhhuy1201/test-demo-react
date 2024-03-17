@@ -1,6 +1,18 @@
 {
+  "header": {
+    "nav-home": "Home",
+    "nav-do-quiz": "Do quiz",
+    "nav-admin": "Admin",
+    "setting": "Setting",
+    "profile": "Profile",
+    "logout": "Logout",
+    "login": "Log in",
+    "signup": "Sign up"
+  },
   "home-container": {
     "title-1": "There's a better way to ask !",
-    "title-2": "Preparing and taking tests has never been easier!\nLogin / Signup to experience full functionality"
+    "title-2": "Preparing and taking tests has never been easier!\nLogin / Signup to experience full functionality",
+    "title-3-login": "Do quiz now",
+    "title-3": "Get start. It's free"
   }
 }

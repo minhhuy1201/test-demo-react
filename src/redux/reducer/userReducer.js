@@ -5,9 +5,11 @@ import {
 
 const INITIAL_STATE = {
   account: {
+    id: '',
     access_token: '',
     refresh_token: '',
     username: '',
+    password: '',
     image: '',
     role: '',
     email: ''
@@ -21,10 +23,12 @@ const userReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         account: {
+          id: action?.payload?.DT?.id,
           access_token: action?.payload?.DT?.access_token,
           refresh_token: action?.payload?.DT?.refresh_token,
           username: action?.payload?.DT?.username,
           image: action?.payload?.DT?.image,
+          password: action?.payload?.DT?.password,
           role: action.payload.DT.role,
           email: action.payload.DT.email
         },
@@ -35,6 +39,8 @@ const userReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         account: {
+          id: '',
+          password: '',
           access_token: '',
           refresh_token: '',
           username: '',

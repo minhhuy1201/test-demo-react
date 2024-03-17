@@ -5,6 +5,26 @@
     .pro-sidebar {
       height: 100vh;
 
+      .brand-icon {
+        animation   : spin 2s linear infinite;
+        margin-right: 10px;
+        font-size   : 1.5rem;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      .sidebar-link {
+        font-size: 1.1rem;
+      }
+
       .sidebar-btn-wrapper {
         display        : flex;
         align-items    : center;
